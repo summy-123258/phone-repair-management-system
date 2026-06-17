@@ -1,0 +1,4 @@
+cn.phone.repair.framework.idempotent.config.PhoneIdempotentConfiguration
+cn.phone.repair.framework.lock4j.config.PhoneLock4jConfiguration
+cn.phone.repair.framework.ratelimiter.config.PhoneRateLimiterConfiguration
+cn.phone.repair.framework.signature.config.PhoneApiSignatureAutoConfiguration

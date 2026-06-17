@@ -1,0 +1,8 @@
+cn.phone.repair.framework.apilog.config.PhoneApiLogAutoConfiguration
+cn.phone.repair.framework.jackson.config.PhoneJacksonAutoConfiguration
+cn.phone.repair.framework.swagger.config.PhoneSwaggerAutoConfiguration
+cn.phone.repair.framework.web.config.PhoneWebAutoConfiguration
+cn.phone.repair.framework.apilog.config.PhoneApiLogRpcAutoConfiguration
+cn.phone.repair.framework.xss.config.PhoneXssAutoConfiguration
+cn.phone.repair.framework.banner.config.PhoneBannerAutoConfiguration
+cn.phone.repair.framework.encrypt.config.PhoneApiEncryptAutoConfiguration

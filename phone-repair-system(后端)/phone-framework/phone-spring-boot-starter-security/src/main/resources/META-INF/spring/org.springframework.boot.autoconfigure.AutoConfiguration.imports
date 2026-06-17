@@ -1,0 +1,5 @@
+cn.phone.repair.framework.security.config.PhoneSecurityRpcAutoConfiguration
+cn.phone.repair.framework.security.config.PhoneSecurityAutoConfiguration
+cn.phone.repair.framework.security.config.PhoneWebSecurityConfigurerAdapter
+cn.phone.repair.framework.operatelog.config.PhoneOperateLogConfiguration
+cn.phone.repair.framework.operatelog.config.PhoneOperateLogRpcAutoConfiguration

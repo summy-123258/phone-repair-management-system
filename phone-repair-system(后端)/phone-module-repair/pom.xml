@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>cn.phone.repair</groupId>
+        <artifactId>phone</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <modules>
+        <module>phone-module-repair-api</module>
+        <module>phone-module-repair-server</module>
+    </modules>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>phone-module-repair</artifactId>
+    <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>
+        demo 模块，主要实现 XXX、YYY、ZZZ 等功能。
+    </description>
+
+</project>

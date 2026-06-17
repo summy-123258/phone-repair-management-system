@@ -1,0 +1,3 @@
+cn.phone.repair.framework.datasource.config.PhoneDataSourceAutoConfiguration
+cn.phone.repair.framework.mybatis.config.PhoneMybatisAutoConfiguration
+cn.phone.repair.framework.translate.config.PhoneTranslateAutoConfiguration

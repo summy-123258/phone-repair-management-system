@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.phone.repair.module.repair.dal.mysql.AccessoryWarningMapper">
+
+    <update id="updateByAccessoryId" parameterType="cn.phone.repair.module.repair.dal.dataobject.AccessoryWarningDO">
+        UPDATE accessory_warning SET
+            level = #{level},
+            current_stock = #{currentStock},
+            safe_stock = #{safeStock},
+            status = #{status},
+            last_notify_time = #{lastNotifyTime},
+            update_time = #{updateTime},
+            updater = #{updater}
+        WHERE accessory_id = #{accessoryId} AND deleted = 0
+    </update>
+
+    <select id="selectByAccessoryId" resultType="cn.phone.repair.module.repair.dal.dataobject.AccessoryWarningDO">
+        SELECT * FROM accessory_warning WHERE accessory_id = #{accessoryId} AND deleted = 0
+    </select>
+
+    <select id="selectListByStatus" resultType="cn.phone.repair.module.repair.dal.dataobject.AccessoryWarningDO">
+        SELECT * FROM accessory_warning WHERE status = #{status} AND deleted = 0 ORDER BY create_time DESC
+    </select>
+
+</mapper>

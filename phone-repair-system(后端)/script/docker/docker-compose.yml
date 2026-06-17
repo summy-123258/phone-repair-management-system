@@ -1,0 +1,162 @@
+version: '3'
+services:
+  phone-gateway:
+    image: phone-gateway
+    container_name: phone-gateway
+    environment:
+      - TZ=Asia/Shanghai # 配置程序默认时区为上海（中国标准时间）
+      - JAVA_TOOL_OPTIONS=-javaagent:/data/skywalking/skywalking-agent/skywalking-agent.jar # 配置skywalking
+      - SW_AGENT_NAME=phone-gateway
+      - SW_AGENT_TRACE_IGNORE_PATH=Redisson/PING,/actuator/**,/admin/**
+      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=[YOUR_SKYWALKING_ADDR] # 请替换 your.skywalking.addr 为你的 skywalking 地址
+      - SPRING_PROFILES_ACTIVE=test # 指定程序运行环境
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=[YOUR_NACOS_ADDR] # 配置中心地址
+      - SPRING_CLOUD_NACOS_CONFIG_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+      - SPRING_CLOUD_NACOS_SERVER_ADDR=[YOUR_NACOS_ADDR]  # 注册中心地址
+      - SPRING_CLOUD_NACOS_DISCOVERY_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+    volumes:
+      - /docker/phone-cloud/logs:/root/logs/
+      - /data/skywalking/skywalking-agent:/data/skywalking/skywalking-agent
+    restart: always
+    network_mode: host # 以主机网络环境运行
+  phone-system:
+    image: phone-module-system-biz
+    container_name: phone-system
+    environment:
+      - TZ=Asia/Shanghai # 配置程序默认时区为上海（中国标准时间）
+      - JAVA_TOOL_OPTIONS=-javaagent:/data/skywalking/skywalking-agent/skywalking-agent.jar # 配置skywalking
+      - SW_AGENT_NAME=phone-gateway
+      - SW_AGENT_TRACE_IGNORE_PATH=Redisson/PING,/actuator/**,/admin/**
+      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=[YOUR_SKYWALKING_ADDR] # 请替换 your.skywalking.addr 为你的 skywalking 地址
+      - SPRING_PROFILES_ACTIVE=test # 指定程序运行环境
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=[YOUR_NACOS_ADDR] # 配置中心地址
+      - SPRING_CLOUD_NACOS_CONFIG_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+      - SPRING_CLOUD_NACOS_SERVER_ADDR=[YOUR_NACOS_ADDR]  # 注册中心地址
+      - SPRING_CLOUD_NACOS_DISCOVERY_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+    volumes:
+      - /docker/phone-cloud/logs:/root/logs/
+      - /data/skywalking/skywalking-agent:/data/skywalking/skywalking-agent
+    healthcheck:
+      test: [ "CMD","curl","-f","http://localhost:48081" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    restart: always
+    network_mode: host
+  phone-infra:
+    image: phone-module-infra-biz
+    container_name: phone-infra
+    environment:
+      - TZ=Asia/Shanghai # 配置程序默认时区为上海（中国标准时间）
+      - JAVA_TOOL_OPTIONS=-javaagent:/data/skywalking/skywalking-agent/skywalking-agent.jar # 配置skywalking
+      - SW_AGENT_NAME=phone-gateway
+      - SW_AGENT_TRACE_IGNORE_PATH=Redisson/PING,/actuator/**,/admin/**
+      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=[YOUR_SKYWALKING_ADDR] # 请替换 your.skywalking.addr 为你的 skywalking 地址
+      - SPRING_PROFILES_ACTIVE=test # 指定程序运行环境
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=[YOUR_NACOS_ADDR] # 配置中心地址
+      - SPRING_CLOUD_NACOS_CONFIG_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+      - SPRING_CLOUD_NACOS_SERVER_ADDR=[YOUR_NACOS_ADDR]  # 注册中心地址
+      - SPRING_CLOUD_NACOS_DISCOVERY_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+    volumes:
+      - /docker/phone-cloud/logs:/root/logs/
+      - /data/skywalking/skywalking-agent:/data/skywalking/skywalking-agent
+    restart: always
+    network_mode: host
+    healthcheck:
+      test: [ "CMD","curl","-f","http://localhost:48082" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      phone-system:
+        condition: service_healthy
+  phone-report:
+    image: phone-module-report-biz
+    container_name: phone-report
+    environment:
+      - TZ=Asia/Shanghai # 配置程序默认时区为上海（中国标准时间）
+      - JAVA_TOOL_OPTIONS=-javaagent:/data/skywalking/skywalking-agent/skywalking-agent.jar # 配置skywalking
+      - SW_AGENT_NAME=phone-gateway
+      - SW_AGENT_TRACE_IGNORE_PATH=Redisson/PING,/actuator/**,/admin/**
+      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=[YOUR_SKYWALKING_ADDR] # 请替换 your.skywalking.addr 为你的 skywalking 地址
+      - SPRING_PROFILES_ACTIVE=test # 指定程序运行环境
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=[YOUR_NACOS_ADDR] # 配置中心地址
+      - SPRING_CLOUD_NACOS_CONFIG_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+      - SPRING_CLOUD_NACOS_SERVER_ADDR=[YOUR_NACOS_ADDR]  # 注册中心地址
+      - SPRING_CLOUD_NACOS_DISCOVERY_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+    volumes:
+      - /docker/phone-cloud/logs:/root/logs/
+      - /data/skywalking/skywalking-agent:/data/skywalking/skywalking-agent
+    restart: always
+    network_mode: host
+    depends_on:
+      phone-infra:
+        condition: service_healthy
+  phone-bpm:
+    image: phone-module-bpm-biz
+    container_name: phone-bpm
+    environment:
+      - TZ=Asia/Shanghai # 配置程序默认时区为上海（中国标准时间）
+      - JAVA_TOOL_OPTIONS=-javaagent:/data/skywalking/skywalking-agent/skywalking-agent.jar # 配置skywalking
+      - SW_AGENT_NAME=phone-gateway
+      - SW_AGENT_TRACE_IGNORE_PATH=Redisson/PING,/actuator/**,/admin/**
+      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=[YOUR_SKYWALKING_ADDR] # 请替换 your.skywalking.addr 为你的 skywalking 地址
+      - SPRING_PROFILES_ACTIVE=test # 指定程序运行环境
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=[YOUR_NACOS_ADDR] # 配置中心地址
+      - SPRING_CLOUD_NACOS_CONFIG_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+      - SPRING_CLOUD_NACOS_SERVER_ADDR=[YOUR_NACOS_ADDR]  # 注册中心地址
+      - SPRING_CLOUD_NACOS_DISCOVERY_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+    volumes:
+      - /docker/phone-cloud/logs:/root/logs/
+      - /data/skywalking/skywalking-agent:/data/skywalking/skywalking-agent
+    restart: always
+    network_mode: host
+    depends_on:
+      phone-infra:
+        condition: service_healthy
+  phone-pay:
+    image: phone-module-pay-biz
+    container_name: phone-pay
+    environment:
+      - TZ=Asia/Shanghai # 配置程序默认时区为上海（中国标准时间）
+      - JAVA_TOOL_OPTIONS=-javaagent:/data/skywalking/skywalking-agent/skywalking-agent.jar # 配置skywalking
+      - SW_AGENT_NAME=phone-gateway
+      - SW_AGENT_TRACE_IGNORE_PATH=Redisson/PING,/actuator/**,/admin/**
+      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=[YOUR_SKYWALKING_ADDR] # 请替换 your.skywalking.addr 为你的 skywalking 地址
+      - SPRING_PROFILES_ACTIVE=test # 指定程序运行环境
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=[YOUR_NACOS_ADDR] # 配置中心地址
+      - SPRING_CLOUD_NACOS_CONFIG_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+      - SPRING_CLOUD_NACOS_SERVER_ADDR=[YOUR_NACOS_ADDR]  # 注册中心地址
+      - SPRING_CLOUD_NACOS_DISCOVERY_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+    volumes:
+      - /docker/phone-cloud/logs:/root/logs/
+      - /data/skywalking/skywalking-agent:/data/skywalking/skywalking-agent
+    restart: always
+    network_mode: host
+    depends_on:
+      phone-infra:
+        condition: service_healthy
+  phone-mp:
+    image: phone-module-mp-biz
+    container_name: phone-mp
+    environment:
+      - TZ=Asia/Shanghai # 配置程序默认时区为上海（中国标准时间）
+      - JAVA_TOOL_OPTIONS=-javaagent:/data/skywalking/skywalking-agent/skywalking-agent.jar # 配置skywalking
+      - SW_AGENT_NAME=phone-gateway
+      - SW_AGENT_TRACE_IGNORE_PATH=Redisson/PING,/actuator/**,/admin/**
+      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=[YOUR_SKYWALKING_ADDR] # 请替换 your.skywalking.addr 为你的 skywalking 地址
+      - SPRING_PROFILES_ACTIVE=test # 指定程序运行环境
+      - SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR=[YOUR_NACOS_ADDR] # 配置中心地址
+      - SPRING_CLOUD_NACOS_CONFIG_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+      - SPRING_CLOUD_NACOS_SERVER_ADDR=[YOUR_NACOS_ADDR]  # 注册中心地址
+      - SPRING_CLOUD_NACOS_DISCOVERY_NAMESPACE=[YOUR_NAMESPACE] # 命名空间
+    volumes:
+      - /docker/phone-cloud/logs:/root/logs/
+      - /data/skywalking/skywalking-agent:/data/skywalking/skywalking-agent
+    restart: always
+    network_mode: host
+    depends_on:
+      phone-infra:
+        condition: service_healthy

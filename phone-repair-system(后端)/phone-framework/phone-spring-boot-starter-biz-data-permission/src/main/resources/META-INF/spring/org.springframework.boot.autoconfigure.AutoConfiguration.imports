@@ -1,0 +1,3 @@
+cn.phone.repair.framework.datapermission.config.PhoneDataPermissionAutoConfiguration
+cn.phone.repair.framework.datapermission.config.PhoneDeptDataPermissionAutoConfiguration
+cn.phone.repair.framework.datapermission.config.PhoneDataPermissionRpcAutoConfiguration

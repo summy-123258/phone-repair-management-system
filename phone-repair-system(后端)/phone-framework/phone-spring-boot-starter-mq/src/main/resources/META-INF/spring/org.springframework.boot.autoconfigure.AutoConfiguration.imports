@@ -1,0 +1,3 @@
+cn.phone.repair.framework.mq.redis.config.PhoneRedisMQProducerAutoConfiguration
+cn.phone.repair.framework.mq.redis.config.PhoneRedisMQConsumerAutoConfiguration
+cn.phone.repair.framework.mq.rabbitmq.config.PhoneRabbitMQAutoConfiguration

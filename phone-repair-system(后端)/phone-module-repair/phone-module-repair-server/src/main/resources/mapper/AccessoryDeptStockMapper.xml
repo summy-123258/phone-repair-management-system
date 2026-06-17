@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.phone.repair.module.repair.dal.mysql.AccessoryDeptStockMapper">
+
+    <update id="updateByAccessoryIdAndDeptId" parameterType="cn.phone.repair.module.repair.dal.dataobject.AccessoryDeptStockDO">
+        UPDATE accessory_dept_stock SET
+                                        total_stock = #{totalStock},
+                                        available_stock = #{availableStock},
+                                        locked_stock = #{lockedStock},
+                                        update_time = #{updateTime},
+                                        updater = #{updater}
+        WHERE accessory_id = #{accessoryId} AND dept_id = #{deptId} AND deleted = 0
+    </update>
+
+    <select id="selectByAccessoryIdAndDeptId" resultType="cn.phone.repair.module.repair.dal.dataobject.AccessoryDeptStockDO">
+        SELECT * FROM accessory_dept_stock
+        WHERE accessory_id = #{accessoryId} AND dept_id = #{deptId} AND deleted = 0
+    </select>
+
+    <select id="selectListByAccessoryId" resultType="cn.phone.repair.module.repair.dal.dataobject.AccessoryDeptStockDO">
+        SELECT * FROM accessory_dept_stock
+        WHERE accessory_id = #{accessoryId} AND deleted = 0
+    </select>
+
+    <select id="selectListByDeptId" resultType="cn.phone.repair.module.repair.dal.dataobject.AccessoryDeptStockDO">
+        SELECT * FROM accessory_dept_stock
+        WHERE dept_id = #{deptId} AND deleted = 0
+    </select>
+
+</mapper>

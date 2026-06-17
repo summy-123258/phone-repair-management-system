@@ -1,0 +1,2 @@
+cn.phone.repair.framework.redis.config.PhoneRedisAutoConfiguration
+cn.phone.repair.framework.redis.config.PhoneCacheAutoConfiguration

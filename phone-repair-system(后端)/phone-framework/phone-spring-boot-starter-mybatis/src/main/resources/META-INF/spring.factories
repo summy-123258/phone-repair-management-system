@@ -1,0 +1,2 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  cn.phone.repair.framework.mybatis.config.IdTypeEnvironmentPostProcessor
